@@ -1,0 +1,77 @@
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Author details</h4>
+
+            <!-- Search Form -->
+            <form method="get" action="{% url 'author_display' %}">
+                <div class="form-group">
+                    <label for="searchInput">Search Author:</label>
+                    <input type="text" class="form-control" id="searchInput" name="q" value="{{ query }}">
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="table-responsive pt-6">
+                        <!-- Author Table -->
+                        <table class="table table-striped project-orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Author Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for d in aut %}
+                                <tr>
+                                    <td>{{d.name}}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <form action="{% url 'deleteauthor' dataid=d.id %}">
+                                                <button type="submit" class="btn btn-danger btn-sm btn-icon-text">
+                                                    Delete
+                                                    <i class="typcn typcn-delete-outline btn-icon-append"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <!-- Pagination -->
+                        <div class="pagination">
+                            <span class="step-links">
+                                {% if aut.has_previous %}
+                                    <a href="?page=1">&laquo; first</a>
+                                    <a href="?page={{ aut.previous_page_number }}">previous</a>
+                                {% endif %}
+
+                                <span class="current">
+                                    Page {{ aut.number }} of {{ aut.paginator.num_pages }}.
+                                </span>
+
+                                {% if aut.has_next %}
+                                    <a href="?page={{ aut.next_page_number }}">next</a>
+                                    <a href="?page={{ aut.paginator.num_pages }}">last &raquo;</a>
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Edit Books</h4>
+                    <form class="forms-sample" method="post" action="{% url 'updatebook' dataid=books.id %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Author</label>
+                          <div class="col-sm-9">
+                            <select class="form-control" name="aname">
+                                <option>{{books.author}}</option>
+                                {% for i in aut %}
+                                <option>{{i.name}}</option>
+                                {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="form-group">
+                      <label for="exampleInputName1">Title</label>
+                      <input type="text" class="form-control" id="exampleInputName1" placeholder="Name" name="tnam" value="{{books.title}}">
+                    </div>
+
+                     <div class="form-group">
+                      <label for="exampleInputPrice">Price</label>
+                      <input type="text" class="form-control" id="exampleInputPrice" placeholder="Price" name="price" value="{{books.price}}">
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+</body>
+</html>
+{% endblock %}
